@@ -39,7 +39,8 @@ document.addEventListener('DOMContentLoaded', () => {
 //para marca
 marca.addEventListener('change', e => {
     datosBusqueda.marca = e.target.value;
-    console.log(datosBusqueda);
+    
+    filtrarAuto(); // se ejecuta la funcion para que haga el filtro
 })
 //para year
 year.addEventListener('change', e => {
@@ -93,3 +94,21 @@ function llenarSelect(){
         year.appendChild(opcion); //agrega las opciones de año al select
     }
 }
+
+
+//funcon que filtrar en base a la busqeda
+function filtrarAuto(){ // funcion general para filtra el auto
+    const resultado = autos.filter(filtrarMarca);
+
+    console.log(resultado);
+}
+
+function filtrarMarca(auto){ //filtro por marca
+    const {marca} = datosBusqueda; // se agregan los elementos del objeto para que no se vuelvan a llamar mas
+    if(marca){ //validamos que marca exista, en este casi si existe y se vale como true
+        return auto.marca === marca; //validamos que el evento de auto.marca sea igual con la marca del objeto
+    }else{
+        return auto; //si no hay un fltro que muestre todos los datos de los autos
+    }
+}
+
