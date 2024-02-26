@@ -29,7 +29,7 @@ const datosBusqueda = {
 
 ///eventos
 document.addEventListener('DOMContentLoaded', () => {
-    mostrarAutos();// muestra los autos al cargar
+    mostrarAutos(autos);// muestra los autos al cargar
 
     //llenas las opciones de años
     llenarSelect();
@@ -72,7 +72,10 @@ color.addEventListener('change', e => {
 
 
 //funciones
-function mostrarAutos(){
+function mostrarAutos(autos){
+
+    limpiarHTML(); //elimina el HTML previo
+
     autos.forEach( auto => {
         const {marca, modelo, year, precio, puertas, color, transmision} = auto
         const autoHTML = document.createElement('p');
@@ -84,6 +87,13 @@ function mostrarAutos(){
         //insertar en el HTML
         resultado.appendChild(autoHTML);
     });
+}
+
+//limipar html
+function limpiarHTML(){
+    while(resultado.firstChild){
+        resultado.removeChild(resultado.firstChild);
+    }
 }
 
 //genera los años del select
@@ -102,7 +112,8 @@ function llenarSelect(){
 function filtrarAuto(){ // funcion general para filtra el auto
     const resultado = autos.filter(filtrarMarca).filter(filtrarYear);
 
-    console.log(resultado);
+    // console.log(resultado);
+    mostrarAutos(resultado);
 }
 
 function filtrarMarca(auto){ //filtro por marca
@@ -115,10 +126,10 @@ function filtrarMarca(auto){ //filtro por marca
 }
 
 function filtrarYear (auto){
-    const {year} = datosBusqueda; // se agregan los elementos del objeto para que no se vuelvan a llamar mas
-    if(year){ //validamos que marca exista, en este casi si existe y se vale como true
-        return auto.year === year; //validamos que el evento de auto.marca sea igual con la marca del objeto
+    const {year} = datosBusqueda; 
+    if(year){ 
+        return auto.year === year; 
     }else{
-        return auto; //si no hay un fltro que muestre todos los datos de los autos
+        return auto;
     }
 }
